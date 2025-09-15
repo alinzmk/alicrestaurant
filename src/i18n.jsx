@@ -3,6 +3,28 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 const I18nContext = createContext(null);
 
 const translations = {
+	tr: {
+		"nav.gallery": "Galeri",
+		"nav.location": "Konum",
+		"nav.contact": "İletişim",
+		"hero.badge": "Yeni",
+		"hero.title": "Alıç Restoran",
+		"hero.desc": "Yeşilliğin arasında eşsiz bir yemek deneyimi.",
+		"hero.cta1": "Başlayın",
+		"hero.cta2": "Daha Fazla Bilgi",
+		"gallery.title": "Fotoğraf Galerisi",
+		"gallery.desc": "Eşsiz manzaralarımız ve yemeklerimizle tanışın.",
+		"map.title": "Konum",
+		"map.desc": "Aşağıdaki haritada bizi bulun.",
+		"contact.title": "İletişime Geçin",
+		"contact.desc": "Sizden haber almak isteriz. Aşağıdaki bilgilerle ulaşın.",
+		"contact.about": "Hakkımızda",
+		"contact.about.text": "Alicres; hareket, etkileşim ve tasarımı harmanlayarak etkileyici görsel deneyimler üretir. Netlik, performans ve akılda kalan detaylara odaklanırız.",
+		"contact.address": "Adres",
+		"contact.address.line1": "Yaratıcı Cad. 1234",
+		"contact.address.line2": "San Francisco, CA 94107",
+		"contact.address.line3": "Amerika Birleşik Devletleri"
+	},
 	en: {
 		"nav.gallery": "Gallery",
 		"nav.location": "Location",
@@ -25,28 +47,6 @@ const translations = {
 		"contact.address.line2": "San Francisco, CA 94107",
 		"contact.address.line3": "United States"
 	},
-	tr: {
-		"nav.gallery": "Galeri",
-		"nav.location": "Konum",
-		"nav.contact": "İletişim",
-		"hero.badge": "Yeni",
-		"hero.title": "Galerimizi Keşfedin",
-		"hero.desc": "GSAP ScrollTrigger ile güçlendirilmiş akıcı paralaks deneyimi.",
-		"hero.cta1": "Başlayın",
-		"hero.cta2": "Daha Fazla Bilgi",
-		"gallery.title": "Fotoğraf Galerisi",
-		"gallery.desc": "3D coverflow karuselde kaydırın. Açmak için dokunun.",
-		"map.title": "Konum",
-		"map.desc": "Aşağıdaki haritada bizi bulun.",
-		"contact.title": "İletişime Geçin",
-		"contact.desc": "Sizden haber almak isteriz. Aşağıdaki bilgilerle ulaşın.",
-		"contact.about": "Hakkımızda",
-		"contact.about.text": "Alicres; hareket, etkileşim ve tasarımı harmanlayarak etkileyici görsel deneyimler üretir. Netlik, performans ve akılda kalan detaylara odaklanırız.",
-		"contact.address": "Adres",
-		"contact.address.line1": "Yaratıcı Cad. 1234",
-		"contact.address.line2": "San Francisco, CA 94107",
-		"contact.address.line3": "Amerika Birleşik Devletleri"
-	},
 	ar: {
 		"nav.gallery": "المعرض",
 		"nav.location": "الموقع",
@@ -68,11 +68,33 @@ const translations = {
 		"contact.address.line1": "1234 شارع الإبداع",
 		"contact.address.line2": "سان فرانسيسكو، كاليفورنيا 94107",
 		"contact.address.line3": "الولايات المتحدة"
+	},
+	ru: {
+		"nav.gallery": "Галерея",
+		"nav.location": "Местоположение",
+		"nav.contact": "Контакты",
+		"hero.badge": "Новинка",
+		"hero.title": "Исследуйте нашу галерею",
+		"hero.desc": "Захватывающие визуальные эффекты с плавным параллаксом на GSAP ScrollTrigger.",
+		"hero.cta1": "Начать",
+		"hero.cta2": "Узнать больше",
+		"gallery.title": "Фотогалерея",
+		"gallery.desc": "Пролистывайте 3D coverflow карусель. Нажмите, чтобы открыть.",
+		"map.title": "Местоположение",
+		"map.desc": "Найдите нас на карте ниже.",
+		"contact.title": "Связаться с нами",
+		"contact.desc": "Мы рады вашей обратной связи. Свяжитесь с нами по данным ниже.",
+		"contact.about": "О нас",
+		"contact.about.text": "Alicres создаёт увлекательные визуальные впечатления, сочетая анимацию, интерактив и дизайн. Мы ценим ясность, производительность и запоминающиеся детали.",
+		"contact.address": "Адрес",
+		"contact.address.line1": "Ул. Креативная, 1234",
+		"contact.address.line2": "Сан‑Франциско, Калифорния 94107",
+		"contact.address.line3": "Соединённые Штаты"
 	}
 };
 
 export function I18nProvider({ children }) {
-	const [lang, setLang] = useState("en");
+	const [lang, setLang] = useState("tr");
 
 	useEffect(() => {
 		document.documentElement.lang = lang;
@@ -83,7 +105,7 @@ export function I18nProvider({ children }) {
 	const value = useMemo(() => ({
 		lang,
 		setLang,
-		t: (key) => translations[lang]?.[key] ?? translations.en[key] ?? key
+		t: (key) => translations[lang]?.[key] ?? translations.tr[key] ?? key
 	}), [lang]);
 
 	return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

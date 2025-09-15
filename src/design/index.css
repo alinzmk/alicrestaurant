@@ -4,6 +4,22 @@
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 
-:root{
-    /* variables */
-}
+:root {
+    /* Primary */
+    --primary: #D2691E;        /* Burnt Orange */
+    --primary-light: #E2725B;  /* Terra Cotta */
+    --primary-dark: #A0522D;   /* Sienna */
+    
+    /* Backgrounds */
+    --bg-primary: #FDFBF7;     /* Creamy White */
+    --bg-warning: #F5F5DC;   /* Off-White */
+    
+    /* Text */
+    --text-primary: #2C1810;   /* Dark Brown */
+    --text-warning: #5D4037; /* Medium Brown */
+    
+    /* Accents */
+    --accent-green: #9CAF88;   /* Sage */
+    --accent-gold: #DAA520;    /* Gold */
+    --accent-coral: #FF7F50;   /* Coral */
+  }

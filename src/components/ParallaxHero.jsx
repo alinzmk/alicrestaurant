@@ -62,7 +62,7 @@ export default function ParallaxHero() {
 			{/* Loader overlay */}
 			{!videoReady && (
 				<div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center bg-black">
-					<Spinner color="secondary" label="Loading..." />
+					<Spinner color="warning" label="Loading..." />
 				</div>
 			)}
 
@@ -95,7 +95,7 @@ export default function ParallaxHero() {
 
 			{/* Foreground content (text animates on scroll) */}
 			<div ref={fgRef} className={`relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center transition-opacity duration-500 ${videoReady ? "opacity-100" : "opacity-0"}`}>
-				<Chip color="secondary" variant="flat" className="mb-6">{t("hero.badge")}</Chip>
+				<Chip color="warning" variant="flat" className="mb-6">{t("hero.badge")}</Chip>
 				<h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
 					{t("hero.title")}
 				</h1>
@@ -103,7 +103,7 @@ export default function ParallaxHero() {
 					{t("hero.desc")}
 				</p>
 				<div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-					<Button color="secondary" variant="shadow">{t("hero.cta1")}</Button>
+					<Button color="warning" variant="shadow">{t("hero.cta1")}</Button>
 					<Button variant="bordered" className="border-white/30 text-white">{t("hero.cta2")}</Button>
 				</div>
 			</div>

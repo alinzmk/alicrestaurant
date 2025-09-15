@@ -96,9 +96,9 @@ export default function Navbar() {
 
 				{/* Desktop nav */}
 				<nav className="hidden items-center gap-6 text-sm md:flex">
-					<a href="#gallery" onClick={(e) => handleNavClick(e, "gallery")} className="hover:text-secondary">{t("nav.gallery")}</a>
-					<a href="#location" onClick={(e) => handleNavClick(e, "location")} className="hover:text-secondary">{t("nav.location")}</a>
-					<a href="#contact" onClick={(e) => handleNavClick(e, "contact")} className="hover:text-secondary">{t("nav.contact")}</a>
+					<a href="#gallery" onClick={(e) => handleNavClick(e, "gallery")} className="hover:text-warning">{t("nav.gallery")}</a>
+					<a href="#location" onClick={(e) => handleNavClick(e, "location")} className="hover:text-warning">{t("nav.location")}</a>
+					<a href="#contact" onClick={(e) => handleNavClick(e, "contact")} className="hover:text-warning">{t("nav.contact")}</a>
 					<select
 						aria-label="Language"
 						value={lang}
@@ -108,6 +108,7 @@ export default function Navbar() {
 						<option value="en">EN</option>
 						<option value="tr">TR</option>
 						<option value="ar">AR</option>
+						<option value="ru">RU</option>
 					</select>
 				</nav>
 
@@ -181,6 +182,7 @@ export default function Navbar() {
 										<option value="en">EN</option>
 										<option value="tr">TR</option>
 										<option value="ar">AR</option>
+										<option value="ru">RU</option>
 									</select>
 								</div>
 							</div>

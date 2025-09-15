@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useLayoutEffect, useRef } from "react";
 import { Image, Modal, ModalBody, ModalContent } from "@heroui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
@@ -8,22 +8,60 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import FadeInWhenVisible from "./FadeInWhenVisible.jsx";
 import { useI18n } from "../i18n.jsx";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import img1 from "../design/assets/photo1.jpg";
+import img2 from "../design/assets/photo2.jpg";
+import img3 from "../design/assets/photo3.jpg";
+import img4 from "../design/assets/photo4.jpg";
+import video1 from "../design/assets/video1.mp4";
+import video2 from "../design/assets/video2.mp4";
+import video3 from "../design/assets/video3.mp4";
+
+
+if (!gsap.core.globals()["ScrollTrigger"]) {
+	gsap.registerPlugin(ScrollTrigger);
+}
 
 const defaultImages = [
-	"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2070&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?q=80&w=2070&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2069&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2069&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=2070&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop",
-	"https://images.unsplash.com/photo-1516822003754-cca485356ecb?q=80&w=1974&auto=format&fit=crop",
+	img1,
+	img2,
+	img3,
+	img4,
+	video1,
+	video2,
+	video3,
 ];
 
 export default function Gallery({ images = defaultImages }) {
 	const [active, setActive] = useState(null);
 	const { t } = useI18n();
 	const slides = useMemo(() => images, [images]);
+
+	const swiperRef = useRef(null);
+
+	useLayoutEffect(() => {
+		const ctx = gsap.context(() => {
+			gsap.fromTo(
+				swiperRef.current,
+				{ y: 40, opacity: 0 },
+				{ y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }
+			);
+			gsap.to(swiperRef.current, {
+				y: -160,
+				ease: "none",
+				scrollTrigger: {
+					trigger: swiperRef.current,
+					start: "top 85%",
+					end: "bottom top",
+					scrub: 1.2
+				}
+			});
+			ScrollTrigger.refresh();
+		});
+		return () => ctx.revert();
+	}, []);
 
 	return (
 		<FadeInWhenVisible>
@@ -33,18 +71,16 @@ export default function Gallery({ images = defaultImages }) {
 					<p className="mt-3 text-base text-foreground/70">{t("gallery.desc")}</p>
 				</div>
 
-				<div className="relative">
+				<div ref={swiperRef} className="relative will-change-transform">
 					<Swiper
-						modules={[EffectCoverflow, Navigation, Pagination]}
+						modules={[EffectCoverflow]}
 						effect="coverflow"
 						grabCursor
 						centeredSlides
 						slidesPerView="auto"
 						loop={slides.length > 3}
 						coverflowEffect={{ rotate: 0, stretch: 0, depth: 160, modifier: 1.5, slideShadows: true }}
-						pagination={{ clickable: true }}
-						navigation
-						className="!pb-12"
+						className=""
 						style={{ height: "560px" }}
 					>
 						{slides.map((src, idx) => (
@@ -53,12 +89,24 @@ export default function Gallery({ images = defaultImages }) {
 									onClick={() => setActive({ src, idx })}
 									className="group relative block h-full w-full overflow-hidden rounded-2xl border border-content3/20 bg-content1/60 shadow-md transition hover:shadow-xl focus:outline-none"
 								>
+									{String(src).toLowerCase().endsWith(".mp4") ? (
+										<video
+											src={src}
+											className="h-full w-full object-cover"
+											muted
+											playsInline
+											autoPlay
+											loop
+											preload="metadata"
+										/>
+									) : (
 									<Image
-										src={`${src}&sat=-15`}
+											src={src}
 										alt={`Gallery image ${idx + 1}`}
 										removeWrapper
 										className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
 									/>
+									)}
 									<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
 								</button>
 							</SwiperSlide>
@@ -71,7 +119,19 @@ export default function Gallery({ images = defaultImages }) {
 						{() => (
 							<ModalBody className="p-0">
 								{active && (
+									String(active.src).toLowerCase().endsWith(".mp4") ? (
+										<video
+											src={active.src}
+											className="h-full w-full rounded-b-xl object-contain"
+											autoPlay
+											loop
+											muted
+											controls
+											playsInline
+										/>
+									) : (
 									<Image src={active.src} alt={`Large image ${active.idx + 1}`} className="h-full w-full rounded-b-xl object-contain" />
+									)
 								)}
 							</ModalBody>
 						)}
